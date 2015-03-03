@@ -5,13 +5,21 @@ from PIL import Image
 # needs API keys for locu and instagram
 
 def locu_search(query):
+    """Inputs: query - a string representing a location, eg New York City, Boston, etc.
+    Side effects: opens most recent instagram photo of restaurants in that location
+    Returns: None
+    """
+    
+    # formats API call, retrieves data
     api_key = locu_api
     url = 'https://api.locu.com/v1_0/venue/search/?api_key=' + api_key
     locality = query.replace(' ','%20')
     final_url = url+'&locality='+locality+'&category=restaurant'
     json_obj = urllib2.urlopen(final_url)
     data = json.load(json_obj)
+    
     # loads local businesses, prints whatever data you want from locu
+    # reference API documentation to print other business data
     for item in data['objects']:
         print item['name']
 
@@ -23,6 +31,7 @@ def locu_search(query):
         photos = json.load(urllib2.urlopen(final_insta))
         img_link = photos['data'][0]['images']['standard_resolution']['url']
         yay_picture = urllib2.urlopen(img_link)
+        
         # downloads and opens nearest instagram photo
         dwnld = open('C:\Python27\\'+item['name']+'.jpg','wb')
         dwnld.write(yay_picture.read())
@@ -30,7 +39,4 @@ def locu_search(query):
         
         im = Image.open('C:\Python27\\'+item['name']+'.jpg')
         im.show()
-            
         print
-
-locu_search('Miami')
