@@ -5,7 +5,7 @@ from PIL import Image
 # needs API keys for locu and instagram
 
 def locu_search(query):
-    """Inputs: query - a string representing a location, eg New York City, Boston, etc.
+    """Inputs: query - a string representing a location, eg 'New York City', 'Boston', etc.
     Side effects: opens most recent instagram photo of restaurants in that location
     Returns: None
     """
